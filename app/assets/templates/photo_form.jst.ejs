@@ -1,4 +1,5 @@
 <form action="/api/photos" method="POST">
+  <input type="hidden" name="photo[owner_id]" value=<%= CURRENT_USER_ID%>>
   <label for="title">Title</label>
   <input type="text" id="title" name="photo[title]"></input>
   <label for="url">URL</label>

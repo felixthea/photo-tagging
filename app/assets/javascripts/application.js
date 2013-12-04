@@ -52,23 +52,25 @@
     },
 
     create: function(callback) {
-      if (this.attributes.id || this.attributes.id <= 0) {
+      if (this.get("id") || this.get("id") <= 0) {
         return;
       }
 
       $.ajax({
         url: '/api/photos',
         type: 'POST',
-        data: {photo: this.attributes },
+        data: this.attributes,
         success: callback
       });
+
+      Photo.trigger("add");
     },
 
     save: function(callback) {
       var that = this;
-      if (this.attributes.id) {
-        var photoId = this.attributes.id;
-        var ownerId = this.attributes.ownerId;
+      if (this.get("id")) {
+        var photoId = this.get("id");
+        var ownerId = this.get("owner_id");
 
         $.ajax({
           url: "/api/users/" + ownerId + "/photos/" + photoId,
@@ -96,6 +98,8 @@
         url: "/api/users/" + userId + "/photos",
         type: 'GET',
         success: function(resp) {
+          that.all = []
+
           resp.forEach(function(photo) {
             var photo = new Photo(photo)
             that.all.push(photo);
@@ -103,6 +107,23 @@
 
           callback();
         }
+      })
+    },
+
+    _events: {},
+
+    on: function(eventName, callback) {
+      if (this._events[eventName]) {
+        this._events[eventName].push(callback);
+      } else {
+        this._events[eventName] = [];
+        this._events[eventName].push(callback);
+      }
+    },
+
+    trigger: function(eventName) {
+      this._events[eventName].forEach(function(callback) {
+        callback();
       })
     }
   })
