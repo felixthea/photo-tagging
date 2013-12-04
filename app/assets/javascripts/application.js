@@ -125,6 +125,17 @@
       this._events[eventName].forEach(function(callback) {
         callback();
       })
+    },
+
+    find: function(id) {
+      var id = +id
+      var photos = PT.Photo.all;
+
+      var photo = _.filter(photos, function(photo) {
+        return photo.get("id") === id
+      })
+
+      return photo[0];
     }
   })
 })(this);

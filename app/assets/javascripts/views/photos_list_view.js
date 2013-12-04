@@ -11,6 +11,12 @@
         that.render()
       });
     });
+
+    this.$el.on("click", "a", function(event) {
+      event.preventDefault();
+      var photo = that.showDetail(event);
+      PT.showPhotoDetail(photo);
+    })
   }
 
   _.extend(PhotosListView.prototype, {
@@ -22,10 +28,15 @@
       this.$el.append('<ul class="photos_list"></ul>')
 
       PT.Photo.all.forEach(function(photo) {
-        that.$el.append("<li>" + photo.get("title") + "</li>")
+        that.$el.append("<li><a href=# data-id=" + photo.get("id") + ">" + photo.get("title") + "</a></li>")
       });
 
       return this;
+    },
+
+    showDetail: function(event) {
+      var id = $(event.currentTarget).attr("data-id");
+      return PT.Photo.find(id);
     }
   })
 })(this)
