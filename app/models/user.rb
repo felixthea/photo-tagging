@@ -12,6 +12,13 @@ class User < ActiveRecord::Base
   has_many(
     :photos,
     class_name: 'Photo',
+    foreign_key: :owner_id,
+    primary_key: :id,
+    inverse_of: :owner)
+
+  has_many(
+    :photo_taggings,
+    class_name: 'PhotoTagging',
     foreign_key: :user_id,
     primary_key: :id)
 

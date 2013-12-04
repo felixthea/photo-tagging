@@ -1,3 +1,11 @@
 <h1><%= @user.username %></h1>
 
 <p>Hello, dear user!</p>
+
+<script>
+  var photos = PT.Photo.fetchByUserId(<%= current_user.id %>, function() {
+    console.log("<%= current_user.photos %>");
+  })
+
+
+</script>

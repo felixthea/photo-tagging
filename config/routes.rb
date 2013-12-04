@@ -4,7 +4,7 @@ PhotoTagger::Application.routes.draw do
 
   namespace "api", :defaults => { :format => :json } do
     resources :users, :only => [] do
-      resources :photos, :only => [:index]
+      resources :photos, :only => [:index, :update]
     end
 
     resources :photos, :only => [:create] do

@@ -7,6 +7,12 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <script type="application/json" id="bootstrapped_user_json">
+    <%= current_user.id.to_json.html_safe %>
+  </script>
+  <script>
+    CURRENT_USER_ID = JSON.parse($("#bootstrapped_user_json").html())
+  </script>
 
 <% if !current_user.nil? %>
   <ul>

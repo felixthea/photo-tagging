@@ -64,5 +64,7 @@ module PhotoTagger
       g.template_engine :erb
       g.test_framework nil
     end
+
+    config.assets.paths << "app/assets/templates"
   end
 end
